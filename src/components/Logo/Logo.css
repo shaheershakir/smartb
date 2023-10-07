@@ -1,0 +1,8 @@
+:root {
+  --color-background: linear-gradient(
+    90deg,
+    rgba(32, 52, 57, 1) 0%,
+    rgba(56, 32, 124, 0.9932423653054971) 25%,
+    rgba(0, 186, 223, 1) 91%
+  );
+}
