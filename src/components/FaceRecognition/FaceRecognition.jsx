@@ -1,7 +1,29 @@
-function FaceRecognition() {
+function FaceRecognition({ imageURL, faceData }) {
   return (
-    <div className="center">
-      <img alt="" src=""></img>
+    <div className="center ma">
+      <div className="absolute mt2">
+        <img
+          id="inputimage"
+          src={imageURL}
+          alt=""
+          width="500px"
+          height="auto"
+        />
+        {/* {faceData.map((region, index) => (
+          <div
+            key={index}
+            className="bounding-box"
+            style={{
+              top: region.region_info.bounding_box.top_row * 100 + "%",
+              right:
+                (1 - region.region_info.bounding_box.right_col) * 100 + "%",
+              bottom:
+                (1 - region.region_info.bounding_box.bottom_row) * 100 + "%",
+              left: region.region_info.bounding_box.left_col * 100 + "%",
+            }}
+          ></div>
+        ))} */}
+      </div>
     </div>
   );
 }
