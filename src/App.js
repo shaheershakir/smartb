@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Clarifai from "clarifai";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
@@ -16,22 +16,27 @@ function App() {
   const [faceData, setFaceData] = useState([]);
   const [imageURL, setImageURL] = useState("");
 
+  useEffect(() => {
+    if (imageURL) {
+      app.models
+        .predict(Clarifai.FACE_DETECT_MODEL, imageURL)
+        .then((response) => {
+          setFaceData(
+            response.outputs[0].data.regions[0].region_info.bounding_box
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [imageURL, app.models]);
+
   function onInputChange(event) {
     setInput(event.target.value);
   }
 
   function onButtonSubmit() {
     setImageURL(input);
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, imageURL)
-      .then((response) => {
-        setFaceData(
-          response.outputs[0].data.regions[0].region_info.bounding_box
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   return (
