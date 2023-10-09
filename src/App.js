@@ -15,6 +15,29 @@ function App() {
   const [input, setInput] = useState("");
   const [faceData, setFaceData] = useState([]);
   const [imageURL, setImageURL] = useState("");
+  const [box, setBox] = useState();
+
+  const calculateFaceLocation = (data) => {
+    setFaceData(data.outputs[0].data.regions[0].region_info.bounding_box);
+    const image = document.getElementById("inputImage");
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return (
+      <div
+        className="bounding-box"
+        style={{
+          top: faceData.top_row * height + "%",
+          right: (1 - faceData.right_col) * width + "%",
+          bottom: (1 - faceData.bottom_row) * height + "%",
+          left: faceData.left_col * width + "%",
+        }}
+      ></div>
+    );
+  };
+
+  const displayFaceBox = (box) => {
+    setBox(box);
+  };
 
   function onInputChange(event) {
     setInput(event.target.value);
@@ -25,9 +48,7 @@ function App() {
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, imageURL)
       .then((response) => {
-        setFaceData(
-          response.outputs[0].data.regions[0].region_info.bounding_box
-        );
+        displayFaceBox(calculateFaceLocation(response));
       })
       .catch((error) => {
         console.log(error);
@@ -43,7 +64,7 @@ function App() {
         InputChange={onInputChange}
         ButtonSubmit={onButtonSubmit}
       />
-      <FaceRecognition imageURL={imageURL} />
+      <FaceRecognition imageURL={imageURL} box={box} />
     </div>
   );
 }

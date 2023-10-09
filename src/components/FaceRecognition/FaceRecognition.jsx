@@ -1,4 +1,5 @@
-function FaceRecognition({ imageURL, faceData }) {
+import "./FaceRecognition.css";
+function FaceRecognition({ imageURL, box, faceData }) {
   return (
     <div className="center ma">
       <div className="absolute mt2">
@@ -23,6 +24,15 @@ function FaceRecognition({ imageURL, faceData }) {
             }}
           ></div>
         ))} */}
+        <div
+          className="bounding-box"
+          style={{
+            top: box.top,
+            right: box.right,
+            bottom: box.bottom,
+            left: box.left,
+          }}
+        ></div>
       </div>
     </div>
   );
