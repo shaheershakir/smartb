@@ -6,6 +6,7 @@ import Logo from "./components/Logo/Logo";
 import Navigation from "./components/Navigation/Navigation";
 import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import SignIn from "./components/SignIn/SignIn";
 
 function App() {
   const app = new Clarifai.App({
@@ -16,6 +17,7 @@ function App() {
   const [faceData, setFaceData] = useState([]);
   const [imageURL, setImageURL] = useState("");
   const [box, setBox] = useState();
+  const [route, setRoute] = useState("signIn");
 
   const calculateFaceLocation = (data) => {
     setFaceData(data.outputs[0].data.regions[0].region_info.bounding_box);
@@ -55,16 +57,26 @@ function App() {
       });
   }
 
+  function onRouteChange(route) {
+    setRoute(route);
+  }
+
   return (
     <div className="App">
       <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm
-        InputChange={onInputChange}
-        ButtonSubmit={onButtonSubmit}
-      />
-      <FaceRecognition imageURL={imageURL} box={box} />
+      {route === "signIn" ? (
+        <SignIn onRouteChange={onRouteChange} />
+      ) : (
+        <>
+          <Logo />
+          <Rank />
+          <ImageLinkForm
+            InputChange={onInputChange}
+            ButtonSubmit={onButtonSubmit}
+          />
+          <FaceRecognition imageURL={imageURL} box={box} />
+        </>
+      )}
     </div>
   );
 }

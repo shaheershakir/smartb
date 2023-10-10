@@ -26,12 +26,14 @@ function FaceRecognition({ imageURL, box, faceData }) {
         ))} */}
         <div
           className="bounding-box"
-          style={{
-            top: box.top,
-            right: box.right,
-            bottom: box.bottom,
-            left: box.left,
-          }}
+          style={
+            {
+              // top: box.top,
+              // right: box.right,
+              // bottom: box.bottom,
+              // left: box.left,
+            }
+          }
         ></div>
       </div>
     </div>
