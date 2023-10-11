@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import SignIn from "./components/SignIn/SignIn";
+import Register from "./components/Register/Register";
 
 function App() {
   const app = new Clarifai.App({
@@ -63,10 +64,8 @@ function App() {
 
   return (
     <div className="App">
-      <Navigation />
-      {route === "signIn" ? (
-        <SignIn onRouteChange={onRouteChange} />
-      ) : (
+      <Navigation onRouteChange={onRouteChange} />
+      {route === "home" ? (
         <>
           <Logo />
           <Rank />
@@ -76,6 +75,10 @@ function App() {
           />
           <FaceRecognition imageURL={imageURL} box={box} />
         </>
+      ) : route === "signIn" ? (
+        <SignIn onRouteChange={onRouteChange} />
+      ) : (
+        <Register onRouteChange={onRouteChange} />
       )}
     </div>
   );
