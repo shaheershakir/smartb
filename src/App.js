@@ -19,6 +19,7 @@ function App() {
   const [imageURL, setImageURL] = useState("");
   const [box, setBox] = useState();
   const [route, setRoute] = useState("signIn");
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const calculateFaceLocation = (data) => {
     setFaceData(data.outputs[0].data.regions[0].region_info.bounding_box);
@@ -59,12 +60,17 @@ function App() {
   }
 
   function onRouteChange(route) {
+    if (route === "signOut") {
+      setIsSignedIn(false);
+    } else if (route === "home") {
+      setIsSignedIn(true);
+    }
     setRoute(route);
   }
 
   return (
     <div className="App">
-      <Navigation onRouteChange={onRouteChange} />
+      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
       {route === "home" ? (
         <>
           <Logo />
